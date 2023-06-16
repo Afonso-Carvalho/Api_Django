@@ -22,3 +22,5 @@ class Matriculas(admin.ModelAdmin):
     list_display_links = ('id', )
 
 admin.site.register(Matricula,Matriculas)
+
+

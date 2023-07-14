@@ -125,8 +125,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = { # espeficicando o metodo utilizado para o versionamento 
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning'
+REST_FRAMEWORK = { 
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning',# espeficicando o metodo utilizado para o versionamento 
+    'DEFAULT_PERMISSION_CLASSES': [ # colocando por padrão sempre estar logado
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.DjangoModelPermissions',
+        ],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.BasicAuthentication',]
 }
 
 

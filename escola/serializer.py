@@ -1,6 +1,7 @@
 # Converte os models como por exemplo class Aluno pra json e joga no banco de dados
 from rest_framework import serializers
 from escola.models import Aluno, Curso , Matricula
+
 class AlunoSerializers(serializers.ModelSerializer):
     class Meta:
         model = Aluno
@@ -31,3 +32,8 @@ class ListaAlunosPorCursoSerializers(serializers.ModelSerializer):
     class Meta:
         model = Matricula
         fields = ['aluno_nome']
+
+class AlunoSerializersV2(serializers.ModelSerializer):
+    class Meta:
+        model = Aluno
+        fields = ['id','nome','celular','rg','cpf','data_nascimento']

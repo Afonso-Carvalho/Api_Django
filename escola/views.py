@@ -1,6 +1,7 @@
-from rest_framework import viewsets,generics
+from rest_framework import viewsets,generics, status
 from escola.models import Aluno, Curso, Matricula
 from escola.serializer import AlunoSerializers, CursoSerializers, MatriculaSerializers, ListaMatriculasAlunoSerializers, ListaAlunosPorCursoSerializers, AlunoSerializersV2
+from rest_framework.response import Response
 
 class AlunosViewSet(viewsets.ModelViewSet):
     """"" Exibindo todos os alunos """""
@@ -15,11 +16,21 @@ class CursosViewSet(viewsets.ModelViewSet):
     """"" Exibindo todos os cursos """""
     queryset = Curso.objects.all()
     serializer_class = CursoSerializers
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            response = Response(serializer.data, status = status.HTTP_201_CREATED)
+            id = str(serializer.data ['id'])
+            response ['Location'] = self.request.build_absolute_uri() + id
+            return response
+
 
 class MatriculaViewSet(viewsets.ModelViewSet):
     """"" Exibindo todas as matriculas """"" # http//aaaaaaaaaaaa/matricula
     queryset = Matricula.objects.all()
     serializer_class = MatriculaSerializers
+    http_method_names = ['get', 'post','put','path']
 
 class ListaMatriculasAluno(generics.ListAPIView):
     """"" Listando todas as matriculas """"" # http//aaaaaaaaaaaa/aluno/2/matricula

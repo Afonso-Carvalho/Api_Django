@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'setup.urls'
@@ -130,17 +131,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = { 
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning',# espeficicando o metodo utilizado para o versionamento 
+
     #'DEFAULT_PERMISSION_CLASSES': [ # colocando por padrão sempre estar logado
     #    'rest_framework.permissions.IsAuthenticated',
     #    'rest_framework.permissions.DjangoModelPermissions',
     #    ],
     #'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.BasicAuthentication',],
+    
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/day',
-    }
+    },
+
+    # Essa parte abaixo serve caso você queira uma aplicação q passe em json e xml por exemplo 
+
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.JSONParser',
+    #     'rest_framework_xml.parsers.XMLParser',
+    # ],
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.BrowsableAPIRenderer', # deixar como padrão a vizualização do django 
+    #     'rest_framework.renderers.JSONRenderer',
+    #     'rest_framework_xml.renderers.XMLRenderer',
+    # ],
+
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -148,3 +164,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)

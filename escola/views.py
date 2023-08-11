@@ -13,11 +13,14 @@ class AlunosViewSet(viewsets.ModelViewSet):
             return AlunoSerializersV2
         else:
             return AlunoSerializers
+    http_method_names = ['get','post','put','path']
 
 class CursosViewSet(viewsets.ModelViewSet):
     """"" Exibindo todos os cursos """""
     queryset = Curso.objects.all()
     serializer_class = CursoSerializers
+    http_method_names = ['get','post','put','path']
+
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():

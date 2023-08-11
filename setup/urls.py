@@ -11,7 +11,8 @@ router.register('cursos', CursosViewSet, basename='Cursos')
 router.register('matriculas', MatriculaViewSet, basename='Matriculas')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('controle-geral/', admin.site.urls),
     path('', include(router.urls) ), # quando for redenrizado alunos/ retorna def alunos
     path('alunos/<int:pk>/matriculas/',ListaMatriculasAluno.as_view()), # procurando matriculas de um aluno especifico 
     path('cursos/<int:pk>/matriculas/', ListaAlunosPorCurso.as_view())
